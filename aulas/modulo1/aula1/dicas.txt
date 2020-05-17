@@ -1,0 +1,7 @@
+* duplicar linha -> "ALT + SHIFT + seta"
+
+* mover a linha -> "segura ALT e navega com a seta"
+
+* renomear um elemento -> "F2"
+
+* renomear todas as ocorrencias do elemento -> "CTRL + D"

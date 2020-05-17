@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <label>(R) Vermelho</label>
+      <input
+        id="red"
+        type="range"
+        value="0"
+        min="0"
+        max="255"
+        onchange="alterRed(this)"
+      />
+      <input id="redValue" type="text" disabled />
+    </div>
+    <div>
+      <label>(G) Green</label>
+      <input
+        id="green"
+        type="range"
+        value="0"
+        min="0"
+        max="255"
+        onchange="alterGreen(this)"
+      />
+      <input id="greenValue" type="text" disabled />
+    </div>
+    <div>
+      <label>(B) Blue</label>
+      <input
+        id="blue"
+        type="range"
+        value="0"
+        min="0"
+        max="255"
+        onchange="alterBlue(this)"
+      />
+      <input id="blueValue" type="text" disabled />
+    </div>
+    <div class="block"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
