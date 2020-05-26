@@ -1,7 +1,9 @@
 window.addEventListener('load', start);
 
 let globalUsers = [];
+let filteredUsers = [];
 let inputSearch = null;
+let button = null;
 let noUsersMessage = "Nenhum usuário filtrado";
 let noDataMessage = "Nada a ser exibido"
 function start() {
@@ -10,9 +12,21 @@ function start() {
     renderStatistics();
 
 }
+
 function renderUsersFiltered() {
     let divUsers = document.getElementById('usuarios');
-    divUsers.innerHTML = '<h2>' + noUsersMessage + '</h2>'
+    console.log(filteredUsers.length === 0)
+    if (filteredUsers.length === 0) {
+        divUsers.innerHTML = '<h2>' + noUsersMessage + '</h2>'
+    } else {
+        divUsers.innerHTML = ''
+        for (let user of filteredUsers) {
+            let p = document.createElement('p');
+            p.textContent = user.name;
+            divUsers.appendChild(p);
+        }
+    }
+    
 }
 
 function renderStatistics() {
@@ -32,7 +46,28 @@ function getUsers () {
                 }
                 return user;
             })
-            console.log(this.globalUsers)
+            inputSearch = document.getElementById('search');
+            inputSearch.disabled = false;
+            inputSearch.addEventListener('keyup', handleKeyUp);
         })
     })
+}
+
+function handleKeyUp(event) {
+    button = document.getElementById('button');
+    if (event.target.value !== '') {
+        button.disabled = false;
+    } else {
+        button.disabled = true;
+    }
+    if (event.key === 'Enter') {
+        filterUsers(event.target.value);
+    }
+}
+
+function filterUsers(value) {
+    filteredUsers = this.globalUsers.filter(user => user.name.includes(value));
+    console.log(filteredUsers);
+    renderUsersFiltered();
+    renderStatistics();
 }
