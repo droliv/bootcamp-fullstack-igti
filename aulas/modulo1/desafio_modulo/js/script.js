@@ -15,14 +15,17 @@ function start() {
 
 function renderUsersFiltered() {
     let divUsers = document.getElementById('usuarios');
-    console.log(filteredUsers.length === 0)
     if (filteredUsers.length === 0) {
         divUsers.innerHTML = '<h2>' + noUsersMessage + '</h2>'
     } else {
         divUsers.innerHTML = ''
         for (let user of filteredUsers) {
             let p = document.createElement('p');
-            p.textContent = user.name;
+            let img = document.createElement('img');
+            img.src = user.image;
+            img.alt = 'alt text';
+            p.textContent = `${user.name}, ${user.age}`;
+            p.appendChild(img);
             divUsers.appendChild(p);
         }
     }
@@ -31,7 +34,36 @@ function renderUsersFiltered() {
 
 function renderStatistics() {
     let divData = document.getElementById('estatisticas');
-    divData.innerHTML = '<h2>' + noDataMessage + '</h2>'
+    if (filteredUsers.length === 0) {
+        divData.innerHTML = '<h2>' + noUsersMessage + '</h2>'
+    } else {
+        divData.innerHTML = ''
+        divData.innerHTML += `<p> Masculino: ${sumMasculin()}</p>`
+        divData.innerHTML += `<p> Feminino: ${sumFemale()} </p>`
+        divData.innerHTML += `<p> Soma das idades: ${sumAges()} </p>`
+        divData.innerHTML += `<p> Media das idades: ${mediaAges()} </p>`
+    }
+}
+function mediaAges() {
+    return sumAges() / filteredUsers.length
+}
+
+function sumAges() {
+    let ages = filteredUsers.reduce((age, user) => {
+        return age += user.age;
+    },0)
+
+    return ages;
+}
+function sumMasculin() {
+   let sum = filteredUsers.filter(user => user.gender === 'male').reduce(sum => sum + 1, 0)
+   return sum
+
+}
+
+function sumFemale() {
+    let sum = filteredUsers.filter(user => user.gender === 'female').reduce(sum => sum + 1, 0)
+   return sum
 }
 
 function getUsers () {
@@ -66,8 +98,9 @@ function handleKeyUp(event) {
 }
 
 function filterUsers(value) {
-    filteredUsers = this.globalUsers.filter(user => user.name.includes(value));
-    console.log(filteredUsers);
+    filteredUsers = this.globalUsers.filter(user => {
+        return user.name.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+    });
     renderUsersFiltered();
     renderStatistics();
 }
